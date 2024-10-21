@@ -39,7 +39,8 @@ watch([name, sortBy], values => {
 const isActive = computed(() => name.value || sortBy.value)
 
 const reset = () => {
-  ;(name.value = ''), (sortBy.value = '')
+  name.value = ''
+  sortBy.value = ''
 }
 </script>
 

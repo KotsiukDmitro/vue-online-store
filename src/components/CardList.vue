@@ -5,6 +5,8 @@ defineProps({
   listItems: Array,
 })
 
+const emit = defineEmits(['addToFavorites'])
+
 const onAdd = () => {
   alert('Добавлено в корзину?')
 }
@@ -15,10 +17,13 @@ const onAdd = () => {
     <Card
       v-for="item in listItems"
       :key="item.id"
+      :id="item.id"
       :title="item.title"
       :imageUrl="item.imageUrl"
       :price="item.price"
       :onAdd="onAdd"
+      :onFavorite="()=> emit('addToFavorites', item)"
+      :isFavorite="item.isFavorite"
     />
   </div>
 </template>

@@ -1,5 +1,13 @@
 <script setup>
+import { useDrawer } from '@/stores/drawer';
 import CardItemList from './CardItemList.vue'
+
+
+const store = useDrawer()
+const closeDrawer = ()=>{
+  store.close()
+} 
+
 </script>
 
 <template>
@@ -12,7 +20,7 @@ import CardItemList from './CardItemList.vue'
         class="flex justify-between p-5 items-center gap-5 border-b border-slate-500"
       >
         <h2 class="text-xl font-bold">Корзина</h2>
-        <div
+        <div @click.prevent="closeDrawer"
           class="text-3xl font-bold text-red-700 cursor-pointer hover:scale-125 transition"
         >
           &times;

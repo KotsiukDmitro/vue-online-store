@@ -1,10 +1,15 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import TheHeader from './components/TheHeader.vue'
 import CardList from './components/CardList.vue'
 import Drawer from './components/Drawer.vue'
 import listItems from '@/assets/sneakers.json'
 import RequestFilter from './components/RequestFilter.vue'
+import { useDrawer } from './stores/drawer'
+
+const filter = ref({})
+const store = useDrawer()
+const isOpen = computed(() => store.isOpen)
 
 // Вариант, если делать запрос с бэка
 // import axios from 'axios'
@@ -19,11 +24,13 @@ import RequestFilter from './components/RequestFilter.vue'
 // }
 // })
 
-const listItemsFilter = computed(() =>
+const listItemsFilter = ref(
   listItems
     .filter(item => {
       if (filter.value.name) {
-        return item.title.toLowerCase().includes(filter.value.name.toLowerCase().trim())
+        return item.title
+          .toLowerCase()
+          .includes(filter.value.name.toLowerCase().trim())
       }
       return item
     })
@@ -36,9 +43,30 @@ const listItemsFilter = computed(() =>
       }
       return
     })
+
+    .map(obj => ({
+      ...obj,
+      isFavorite: false,
+      isAdded: false,
+    }))
+
 )
 
-const filter = ref({})
+
+const addToFavorites = favorite => {
+  // alert('Добавить в избраное ?')
+  listItemsFilter.value = listItemsFilter.value.map(item => {
+    if (favorite.id === item.id) {
+      return {
+        ...item,
+        isFavorite: !item.isFavorite,
+        favoriteId: favorite.id,
+      }
+    }
+    return item
+  })
+}
+
 
 </script>
 
@@ -46,7 +74,7 @@ const filter = ref({})
   <div
     class="w-4/5 m-auto bg-white min-h-screen rounded-xl shadow-xl mt-10 mb-10"
   >
-    <!-- <Drawer /> -->
+    <Drawer v-if="isOpen" />
     <TheHeader />
     <div class="p-10">
       <div class="flex justify-between items-center mb-5">
@@ -54,7 +82,7 @@ const filter = ref({})
         <RequestFilter v-model="filter" v-if="listItems.length" />
       </div>
 
-      <CardList :listItems="listItemsFilter" />
+      <CardList :listItems="listItemsFilter" @addToFavorites="addToFavorites" />
     </div>
   </div>
 </template>

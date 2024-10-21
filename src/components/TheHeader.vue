@@ -1,3 +1,13 @@
+<script setup>
+import { useDrawer } from '@/stores/drawer';
+
+
+const store = useDrawer()
+const openDrawer = ()=> {
+    store.open()}
+
+</script>
+
 <template>
         <header class="flex justify-between border-b border-slate-300 px-10 py-5">
         <div class="flex items-center gap-4">
@@ -9,13 +19,13 @@
             </div>
         </div>
         <ul class="flex items-center gap-7">
-            <li class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
+            <li @click.prevent="openDrawer" class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/cart.svg" alt="cart" />
                 <span>100 $</span>
             </li>
             <li class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/heart.svg" alt="heart" />
-                <span>Закладки</span>
+                <span>Избраное</span>
             </li>
             <li class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/profile.svg" alt="profile" />
@@ -24,3 +34,4 @@
         </ul>
     </header>
 </template>
+
