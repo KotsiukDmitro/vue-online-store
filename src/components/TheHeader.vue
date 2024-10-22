@@ -1,6 +1,10 @@
 <script setup>
 import { useDrawer } from '@/stores/drawer';
 
+defineProps({
+  totalPrice: Number
+})
+
 
 const store = useDrawer()
 const openDrawer = ()=> {
@@ -21,7 +25,7 @@ const openDrawer = ()=> {
         <ul class="flex items-center gap-7">
             <li @click.prevent="openDrawer" class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/cart.svg" alt="cart" />
-                <span>100 $</span>
+                <span>{{ totalPrice }} $</span>
             </li>
             <li class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/heart.svg" alt="heart" />

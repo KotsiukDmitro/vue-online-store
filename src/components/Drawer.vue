@@ -1,12 +1,26 @@
 <script setup>
 import { useDrawer } from '@/stores/drawer';
 import CardItemList from './CardItemList.vue'
+import { computed } from 'vue';
+
+const props = defineProps({
+  totalPrice: Number
+})
+
+const emit = defineEmits(['createOrder'])
 
 
 const store = useDrawer()
 const closeDrawer = ()=>{
   store.close()
 } 
+
+const vatPrice = computed(()=> props.totalPrice*0.05)
+
+// const createOrder = ()=> {
+//   alert('Заказ отправлен ...')
+  
+// }
 
 </script>
 
@@ -28,29 +42,32 @@ const closeDrawer = ()=>{
       </div>
       <div class="py-10 gap-3">
         <CardItemList />
-        <CardItemList />
-        <CardItemList />
       </div>
   
 
-      <footer class="flex flex-col gap-5 mb-5 mt-auto">
+      <footer class="flex flex-col gap-5 mb-5 mt-auto" v-if="totalPrice > 0">
         <div class="flex gap-2">
           <span>Общая сумма:</span>
           <div class="flex-1 border-b border-dashed"></div>
-          <b>1000 $</b>
+          <b>{{ totalPrice }} $</b>
         </div>
         <div class="flex gap-2">
           <span>Налог 5%:</span>
           <div class="flex-1 border-b border-dashed"></div>
-          <b>50 $</b>
+          <b>{{ vatPrice }} $</b>
         </div>
         <button
-          disabled=""
+        @click.prevent="emit('createOrder')"
+          
           class="bg-lime-500 w-full rounded-xl py-3 text-white font-bold text-2xl tracking-wider hover:bg-lime-600 transition disabled:bg-slate-300"
         >
           Оформить заказ
         </button>
       </footer>
+      <div v-else class="flex flex-col items-center">
+        <h3 class="text-red-500 text-xl">Корзина пуста</h3>
+        <img src="/package-icon.png" />
+      </div>
     </div>
   </div>
 </template>

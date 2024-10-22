@@ -7,7 +7,7 @@ const props = defineProps({
   price: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  onAdd: Function,
+  addDelCart: Function,
   onFavorite: Function,
 })
 </script>
@@ -31,7 +31,7 @@ const props = defineProps({
         <span class="font-bold">{{ price }}$</span>
       </div>
       <img
-        @click="onAdd"
+        @click="addDelCart"
         :src="!isAdded ? '/plus.svg' : '/checked.svg'"
         alt="Plus"
       />

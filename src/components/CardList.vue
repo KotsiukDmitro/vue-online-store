@@ -5,11 +5,9 @@ defineProps({
   listItems: Array,
 })
 
-const emit = defineEmits(['addToFavorites'])
+const emit = defineEmits(['addToFavorites', 'addDelCart'])
 
-const onAdd = () => {
-  alert('Добавлено в корзину?')
-}
+
 </script>
 
 <template>
@@ -21,9 +19,10 @@ const onAdd = () => {
       :title="item.title"
       :imageUrl="item.imageUrl"
       :price="item.price"
-      :onAdd="onAdd"
       :onFavorite="()=> emit('addToFavorites', item)"
       :isFavorite="item.isFavorite"
+      :addDelCart="()=> emit('addDelCart', item)"
+      :isAdded="item.isAdded"
     />
   </div>
 </template>
