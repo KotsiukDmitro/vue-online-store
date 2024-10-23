@@ -29,13 +29,19 @@ const openDrawer = ()=> {
             </li>
             <li class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/heart.svg" alt="heart" />
-                <span>Избраное</span>
+                <router-link to="favorites"><span>Избраное</span></router-link>
             </li>
             <li class="flex items-center gap-2 text-gray-500 hover:text-black font-bold cursor-pointer">
                 <img src="/profile.svg" alt="profile" />
-                <span>Профиль</span>
+                <router-link to="profile"><span>Профиль</span></router-link>
             </li>
         </ul>
     </header>
 </template>
+
+<style lang="postcss">
+.nav-link--active {
+  @apply text-blue-500
+}
+</style>
 
