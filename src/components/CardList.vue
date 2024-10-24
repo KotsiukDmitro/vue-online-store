@@ -5,9 +5,6 @@ defineProps({
   listItems: Array,
 })
 
-const emit = defineEmits(['addToFavorites', 'addDelCart'])
-
-
 </script>
 
 <template>
@@ -19,9 +16,7 @@ const emit = defineEmits(['addToFavorites', 'addDelCart'])
       :title="item.title"
       :imageUrl="item.imageUrl"
       :price="item.price"
-      :onFavorite="()=> emit('addToFavorites', item)"
       :isFavorite="item.isFavorite"
-      :addDelCart="()=> emit('addDelCart', item)"
       :isAdded="item.isAdded"
     />
   </div>

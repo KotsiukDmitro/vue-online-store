@@ -23,8 +23,7 @@ defineProps({
       </div>
       <div
         @click="emit('removeFromCart')"
-        class="absolute top-2 right-2 cursor-pointer hover:red-500 transition hover:scale-125 w-6"
-        
+        class="absolute top-2 right-2 cursor-pointer hover:red-500 transition hover:scale-125 w-6"     
       >
         <img src="/close.svg" />
       </div>

@@ -1,4 +1,7 @@
 <script setup>
+import { useProducts } from '@/stores/products'
+import { inject } from 'vue'
+
 
 const props = defineProps({
   id: Number,
@@ -7,9 +10,34 @@ const props = defineProps({
   price: Number,
   isFavorite: Boolean,
   isAdded: Boolean,
-  addDelCart: Function,
-  onFavorite: Function,
 })
+const { cart } = inject('cart')
+const store = useProducts()
+const onFavorite = () => store.addToFavorites(props.id)
+
+
+const addDelCart = id => {
+  store.list = store.list.map(item => {
+    if (item.id === id) {
+      if (!item.isAdded) {
+        cart.value.push(item)
+        return {
+          ...item,
+          isAdded: true,
+        }
+      } else {
+        cart.value.splice(cart.value.indexOf(item), 1)
+        return {
+          ...item,
+          isAdded: false,
+        }
+      }
+    }
+    return item
+  })
+}
+
+
 </script>
 
 <template>
@@ -31,7 +59,7 @@ const props = defineProps({
         <span class="font-bold">{{ price }}$</span>
       </div>
       <img
-        @click="addDelCart"
+        @click="addDelCart(id)"
         :src="!isAdded ? '/plus.svg' : '/checked.svg'"
         alt="Plus"
       />

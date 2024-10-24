@@ -4,11 +4,9 @@ import TheHeader from './components/TheHeader.vue'
 import Drawer from './components/Drawer.vue'
 import { useDrawer } from './stores/drawer'
 
-
 const store = useDrawer()
 const isOpen = computed(() => store.isOpen)
 const cart = ref(JSON.parse(localStorage.getItem('cart') || []))
-
 
 const removeFromCart = item => {
   cart.value.splice(cart.value.indexOf(item), 1)
@@ -34,8 +32,6 @@ watch(
   { deep: true }
 )
 
-
-
 provide('cart', { cart, removeFromCart })
 </script>
 
@@ -46,7 +42,6 @@ provide('cart', { cart, removeFromCart })
     <Drawer v-if="isOpen" :totalPrice="totalPrice" @createOrder="createOrder" />
     <TheHeader :totalPrice="totalPrice" />
     <div class="p-10">
-
       <RouterView />
     </div>
   </div>

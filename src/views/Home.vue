@@ -3,15 +3,13 @@ import RequestFilter from '@/components/RequestFilter.vue';
 import listItems from '@/assets/sneakers.json'
 import CardList from '@/components/CardList.vue';
 import { ref, computed, inject, watch} from 'vue';
+import { useProducts } from '@/stores/products';
+import { storeToRefs } from 'pinia';
 
 const filter = ref({})
-const listProducts = ref(
-  listItems.map(obj => ({
-    ...obj,
-    isFavorite: false,
-    isAdded: false,
-  }))
-)
+
+const store = useProducts()
+const {list: listProducts} = storeToRefs(store)
 
 // Вариант, если делать запрос с бэка
 // import axios from 'axios'
@@ -49,32 +47,6 @@ const listItemsFilter = computed(() =>
     })
 )
 
-const addToFavorites = favorite => {
-  listProducts.value = listProducts.value.map(item => {
-    if (favorite.id === item.id) {
-      // alert(!item.isFavorite ? 'Добавить в избраное ?' : 'Удалить из избраного ?')
-      return {
-        ...item,
-        isFavorite: !item.isFavorite,
-        favoriteId: favorite.id,
-      }
-      alert('Добавить в избраное ?')
-    }
-    return item
-  })
-}
-
-const addDelCart = item => {
-  if (!item.isAdded) {
-    cart.value.push(item)
-    // alert('Добавлен в корзину')
-    item.isAdded = true
-  } else {
-    cart.value.splice(cart.value.indexOf(item), 1)
-    // alert('Удален из корзины')
-    item.isAdded = false
-  }
-}
 
 watch(
   cart,
@@ -87,6 +59,7 @@ watch(
   { immediate: true, deep: true }
 )
 
+
 </script>
 
 <template>
@@ -95,12 +68,7 @@ watch(
         <h2 class="text-3xl font-bold mb-5">Все кроссовки</h2>
         <RequestFilter v-model="filter" v-if="listItems.length" />
       </div>
-
-      <CardList
-        :listItems="listItemsFilter"
-        @addToFavorites="addToFavorites"
-        @addDelCart="addDelCart"
-      />
+      <CardList :listItems="listItemsFilter" />
   </div>
 </template>
 
