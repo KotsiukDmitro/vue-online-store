@@ -1,6 +1,6 @@
 <script setup>
 import { useProducts } from '@/stores/products'
-import { inject } from 'vue'
+import { computed, inject } from 'vue'
 
 
 const props = defineProps({
@@ -8,13 +8,13 @@ const props = defineProps({
   imageUrl: String,
   title: String,
   price: Number,
-  isFavorite: Boolean,
   isAdded: Boolean,
 })
 const { cart } = inject('cart')
 const store = useProducts()
-const onFavorite = () => store.addToFavorites(props.id)
+const toggleFavorite = () => store.toggleFavorite(props.id)
 
+const favorite = computed(()=> store.isFavorite(props.id))
 
 const addDelCart = id => {
   store.list = store.list.map(item => {
@@ -37,7 +37,6 @@ const addDelCart = id => {
   })
 }
 
-
 </script>
 
 <template>
@@ -46,8 +45,8 @@ const addDelCart = id => {
   >
     <div class="absolute top-8 left-8">
       <img
-        @click="onFavorite"
-        :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
+        @click="toggleFavorite"
+        :src="favorite ? '/like-2.svg' : '/like-1.svg'"
         alt="Favorite"
       />
     </div>

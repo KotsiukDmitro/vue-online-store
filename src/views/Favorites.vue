@@ -5,10 +5,7 @@ import { useProducts } from '@/stores/products';
 
 
 const store = useProducts()
-const listFavorites = computed(() => store.list.filter(item => {
-        return item.isFavorite   
-    })
-)
+const listFavorites = computed(() => store.list.filter(item => store.isFavorite(item.id)))
 
 </script>
 

@@ -11,6 +11,8 @@ const filter = ref({})
 const store = useProducts()
 const {list: listProducts} = storeToRefs(store)
 
+
+
 // Вариант, если делать запрос с бэка
 // import axios from 'axios'
 // import { onMounted, ref } from 'vue';
@@ -58,7 +60,6 @@ watch(
   },
   { immediate: true, deep: true }
 )
-
 
 </script>
 

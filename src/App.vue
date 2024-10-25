@@ -6,7 +6,7 @@ import { useDrawer } from './stores/drawer'
 
 const store = useDrawer()
 const isOpen = computed(() => store.isOpen)
-const cart = ref(JSON.parse(localStorage.getItem('cart') || []))
+const cart = ref(JSON.parse(localStorage.getItem('cart')) || [])
 
 const removeFromCart = item => {
   cart.value.splice(cart.value.indexOf(item), 1)
@@ -19,7 +19,7 @@ const totalPrice = computed(() =>
 )
 
 const createOrder = () => {
-  alert('Заказ отправлен ...')
+  alert('Заказ успешно отправлен ...')
   cart.value.map(item => (item.isAdded = false))
   cart.value = []
 }
