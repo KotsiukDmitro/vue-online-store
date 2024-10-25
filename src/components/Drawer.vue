@@ -2,20 +2,24 @@
 import { useDrawer } from '@/stores/drawer';
 import CardItemList from './CardItemList.vue'
 import { computed } from 'vue';
+import { useCartStore } from '@/stores/cart';
 
-const props = defineProps({
-  totalPrice: Number
-})
+// const props = defineProps({
+//   totalPrice: Number
+// })
 
-const emit = defineEmits(['createOrder'])
+// const emit = defineEmits(['createOrder'])
 
 const store = useDrawer()
 const closeDrawer = ()=>{
   store.close()
 } 
 
-const vatPrice = computed(()=> Math.round(props.totalPrice*5/100) )
+const cartStore = useCartStore()
+const totalPrice = computed(()=>cartStore.totalPrice())
+const createOrder = cartStore.createOrder()
 
+const vatPrice = computed(()=> Math.round(props.totalPrice*5/100) )
 
 </script>
 
@@ -51,7 +55,7 @@ const vatPrice = computed(()=> Math.round(props.totalPrice*5/100) )
           <b>{{ vatPrice }} $</b>
         </div>
         <button
-        @click.prevent="emit('createOrder')"         
+        @click.prevent="createOrder"         
           class="bg-lime-500 w-full rounded-xl py-3 text-white font-bold text-2xl tracking-wider hover:bg-lime-600 transition disabled:bg-slate-300"
         >
           Оформить заказ

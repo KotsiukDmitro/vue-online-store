@@ -2,30 +2,6 @@ import { defineStore } from "pinia";
 import listItems from '@/assets/sneakers.json'
 import { ref, watch } from "vue";
 
-// export const useProducts = defineStore('products', {
-//     state: () => {
-//         return {
-//             list: listItems,
-//             favoriteProductIds: JSON.parse(localStorage.getItem('favorites')) || []
-//         }
-//     },
-//     actions: {
-//         addToFavorites(id) {
-//             this.list = this.list.map(item => {
-//                 if (id === item.id) {                  
-//                   // alert(!item.isFavorite ? 'Добавить в избраное ?' : 'Удалить из избраного ?')               
-//                   return {
-//                     ...item,
-//                     isFavorite: !item.isFavorite,
-//                   }
-//                 }
-//                 return item
-//               })
-              
-//         }
-      
-//     }
-// })
 
 export const useProducts = defineStore('products', ()=> {
 
@@ -45,9 +21,9 @@ export const useProducts = defineStore('products', ()=> {
 
         const toggleFavorite = (productId) => {
           if (isFavorite(productId)) {
-            removeFavorite(productId);
+            removeFavorite(productId)
           } else {
-            addFavorites(productId);
+            addFavorites(productId)
           }
         };
 

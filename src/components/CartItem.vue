@@ -1,6 +1,11 @@
 <script setup>
+import { useCartStore } from '@/stores/cart';
 
-const emit = defineEmits(['removeFromCart'])
+
+const cartStore = useCartStore()
+const removeFromCart = ()=> cartStore.removeFromCart()
+
+// const emit = defineEmits(['removeFromCart'])
 
 defineProps({
   id: Number,
@@ -22,7 +27,7 @@ defineProps({
         <b>{{ price }} $</b>
       </div>
       <div
-        @click="emit('removeFromCart')"
+        @click="removeFromCart"
         class="absolute top-2 right-2 cursor-pointer hover:red-500 transition hover:scale-125 w-6"     
       >
         <img src="/close.svg" />

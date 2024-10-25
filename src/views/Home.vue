@@ -5,11 +5,15 @@ import CardList from '@/components/CardList.vue';
 import { ref, computed, inject, watch} from 'vue';
 import { useProducts } from '@/stores/products';
 import { storeToRefs } from 'pinia';
+import { useCartStore } from '@/stores/cart';
 
 const filter = ref({})
 
 const store = useProducts()
 const {list: listProducts} = storeToRefs(store)
+
+// const cartStore = useCartStore()
+// const cart = cartStore.cart
 
 
 
@@ -26,7 +30,7 @@ const {list: listProducts} = storeToRefs(store)
 // }
 // })
 
-const { cart } = inject('cart')
+// const { cart } = inject('cart')
 
 const listItemsFilter = computed(() =>
   listProducts.value
@@ -50,16 +54,16 @@ const listItemsFilter = computed(() =>
 )
 
 
-watch(
-  cart,
-  () => {
-    listProducts.value = listProducts.value.map(item => ({
-      ...item,
-      isAdded: cart.value.some(cartItem => cartItem.id === item.id),
-    }))
-  },
-  { immediate: true, deep: true }
-)
+// watch(
+//   cart,
+//   () => {
+//     listProducts.value = listProducts.value.map(item => ({
+//       ...item,
+//       isAdded: cart.value.some(cartItem => cartItem.id === item.id),
+//     }))
+//   },
+//   { immediate: true, deep: true }
+// )
 
 </script>
 

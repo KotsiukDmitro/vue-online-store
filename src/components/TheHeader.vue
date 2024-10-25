@@ -1,14 +1,20 @@
 <script setup>
 import { useDrawer } from '@/stores/drawer'
+import { useCartStore } from '@/stores/cart';
+import { computed } from 'vue';
 
-defineProps({
-  totalPrice: Number,
-})
+// defineProps({
+//   totalPrice: Number,
+// })
 
 const store = useDrawer()
 const openDrawer = () => {
   store.open()
 }
+
+const cartStore = useCartStore()
+const totalPrice = computed(() => cartStore.totalPrice())
+
 </script>
 
 <template>
