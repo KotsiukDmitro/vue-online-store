@@ -2,18 +2,16 @@
 import { ref, computed, watch } from 'vue'
 
 const emits = defineEmits(['update:modelValue'])
-defineProps(['modelValue'])
+const props = defineProps(['modelValue'])
 
-const name = ref(JSON.parse(localStorage.getItem('name')) || '')
-const sortByPrice = ref(JSON.parse(localStorage.getItem('sortByPrice')) || '')
+const name = ref(props.modelValue.name)
+const sortByPrice = ref(props.modelValue.sortByPrice)
 
 watch([name, sortByPrice], values => {
   emits('update:modelValue', {
     name: values[0],
     sortByPrice: values[1],
   })
-  localStorage.setItem('name', JSON.stringify(values[0]))
-  localStorage.setItem('sortByPrice', JSON.stringify(values[1]))
 })
 
 const isActive = computed(() => name.value || sortByPrice.value)
