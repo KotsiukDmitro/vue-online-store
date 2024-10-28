@@ -1,20 +1,17 @@
 <script setup>
-import RequestFilter from '@/components/RequestFilter.vue';
+import { storeToRefs } from 'pinia'
+import { ref, computed, inject, watch } from 'vue'
+import RequestFilter from '@/components/RequestFilter.vue'
 import listItems from '@/assets/sneakers.json'
-import CardList from '@/components/CardList.vue';
-import { ref, computed, inject, watch} from 'vue';
-import { useProducts } from '@/stores/products';
-import { storeToRefs } from 'pinia';
-import { useCartStore } from '@/stores/cart';
+import CardList from '@/components/CardList.vue'
+import { useProducts } from '@/stores/products'
 
-const filter = ref({})
+
+
+const filter = ref(JSON.parse(localStorage.getItem('filter')) || {})
 
 const store = useProducts()
-const {list: listProducts} = storeToRefs(store)
-
-// const cartStore = useCartStore()
-// const cart = cartStore.cart
-
+const { list: listProducts } = storeToRefs(store)
 
 
 // Вариант, если делать запрос с бэка
@@ -43,37 +40,32 @@ const listItemsFilter = computed(() =>
       return item
     })
     .sort((a, b) => {
-      if (filter.value.sortBy === 'priceMin') {
+      if (filter.value.sortByPrice === 'priceMin') {
         return a.price - b.price
       }
-      if (filter.value.sortBy === 'priceMax') {
+      if (filter.value.sortByPrice === 'priceMax') {
         return b.price - a.price
       }
       return
     })
 )
 
-
-// watch(
-//   cart,
-//   () => {
-//     listProducts.value = listProducts.value.map(item => ({
-//       ...item,
-//       isAdded: cart.value.some(cartItem => cartItem.id === item.id),
-//     }))
-//   },
-//   { immediate: true, deep: true }
-// )
-
+watch(
+  filter,
+  () => {
+    localStorage.setItem('filter', JSON.stringify(filter.value))
+  },
+  { deep: true }
+)
 </script>
 
 <template>
   <div>
-      <div class="flex justify-between items-center mb-5">
-        <h2 class="text-3xl font-bold mb-5">Все кроссовки</h2>
-        <RequestFilter v-model="filter" v-if="listItems.length" />
-      </div>
-      <CardList :listItems="listItemsFilter" />
+    <div class="flex justify-between items-center mb-5">
+      <h2 class="text-3xl font-bold mb-5">Все кроссовки</h2>
+      <RequestFilter v-model="filter" v-if="listItems.length" />
+    </div>
+    <CardList :listItems="listItemsFilter" />
   </div>
 </template>
 

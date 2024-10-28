@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed} from 'vue';
 import CardList from '@/components/CardList.vue';
 import { useProducts } from '@/stores/products';
 

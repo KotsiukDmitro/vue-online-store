@@ -1,6 +1,6 @@
 <script setup>
+import { computed } from 'vue'
 import { useProducts } from '@/stores/products'
-import { computed, inject } from 'vue'
 import { useCartStore } from '@/stores/cart';
 
 
@@ -9,33 +9,11 @@ const props = defineProps({
   imageUrl: String,
   title: String,
   price: Number,
-  isAdded: Boolean,
 })
-// const { cart } = inject('cart')
+
 const store = useProducts()
 const toggleFavorite = () => store.toggleFavorite(props.id)
 const favorite = computed(()=> store.isFavorite(props.id))
-
-// const addDelCart = id => {
-//   store.list = store.list.map(item => {
-//     if (item.id === id) {
-//       if (!item.isAdded) {
-//         cart.value.push(item)
-//         return {
-//           ...item,
-//           isAdded: true,
-//         }
-//       } else {
-//         cart.value.splice(cart.value.indexOf(item), 1)
-//         return {
-//           ...item,
-//           isAdded: false,
-//         }
-//       }
-//     }
-//     return item
-//   })
-// }
 
 const cartStore = useCartStore()
 const toggle = () => cartStore.toggle(props.id)

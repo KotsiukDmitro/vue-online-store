@@ -1,9 +1,35 @@
+<script setup>
+import { ref, computed, watch } from 'vue'
+
+const emits = defineEmits(['update:modelValue'])
+defineProps(['modelValue'])
+
+const name = ref(JSON.parse(localStorage.getItem('name')) || '')
+const sortByPrice = ref(JSON.parse(localStorage.getItem('sortByPrice')) || '')
+
+watch([name, sortByPrice], values => {
+  emits('update:modelValue', {
+    name: values[0],
+    sortByPrice: values[1],
+  })
+  localStorage.setItem('name', JSON.stringify(values[0]))
+  localStorage.setItem('sortByPrice', JSON.stringify(values[1]))
+})
+
+const isActive = computed(() => name.value || sortByPrice.value)
+
+const reset = () => {
+  name.value = ''
+  sortByPrice.value = ''
+}
+</script>
+
 <template>
   <div class="flex gap-5">
     <button v-if="isActive" @click="reset" class="border px-2 rounded-xl">
       Сброс фильтров
     </button>
-    <select v-model="sortBy" class="py-2 px-3 border rounded-md outline-none">
+    <select v-model="sortByPrice" class="py-2 px-3 border rounded-md outline-none">
       <option disabled selected>сортировать по цене</option>
       <option value="priceMin">Цена по возростанию</option>
       <option value="priceMax">Цена по убыванию</option>
@@ -19,28 +45,4 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, watch } from 'vue'
-
-const emits = defineEmits(['update:modelValue'])
-defineProps(['modelValue'])
-
-const name = ref()
-const sortBy = ref()
-
-watch([name, sortBy], values => {
-  emits('update:modelValue', {
-    name: values[0],
-    sortBy: values[1],
-  })
-})
-
-const isActive = computed(() => name.value || sortBy.value)
-
-const reset = () => {
-  name.value = ''
-  sortBy.value = ''
-}
-</script>
 

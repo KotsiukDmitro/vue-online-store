@@ -1,14 +1,9 @@
 <script setup>
-import { useDrawer } from '@/stores/drawer';
-import CardItemList from './CardItemList.vue'
 import { computed } from 'vue';
+import { useDrawer } from '@/stores/drawer';
 import { useCartStore } from '@/stores/cart';
+import CardItemList from './CardItemList.vue'
 
-// const props = defineProps({
-//   totalPrice: Number
-// })
-
-// const emit = defineEmits(['createOrder'])
 
 const store = useDrawer()
 const closeDrawer = ()=>{
@@ -16,19 +11,17 @@ const closeDrawer = ()=>{
 } 
 
 const cartStore = useCartStore()
-const totalPrice = computed(()=>cartStore.totalPrice())
-const createOrder = cartStore.createOrder()
+const totalPrice = computed(()=>cartStore.totalPrice)
+const createOrder = ()=> cartStore.createOrder()
 
-const vatPrice = computed(()=> Math.round(props.totalPrice*5/100) )
+const vatPrice = computed(()=> Math.round(cartStore.totalPrice*5/100) )
 
 </script>
 
 <template>
   <div>
-    <div
-      class="fixed h-full w-full top-0 left-0 bg-black opacity-50 z-10"
-    ></div>
-    <div class="fixed top-0 min-h-full w-1/4 right-0 z-20 bg-white px-5">
+    <div class="fixed h-full w-full top-0 left-0 bg-black opacity-50 z-10"></div>
+    <div class="fixed top-0 h-full w-1/4 right-0 z-20 bg-white px-5 overflow-y-auto">
       <div
         class="flex justify-between p-5 items-center gap-5 border-b border-slate-500"
       >

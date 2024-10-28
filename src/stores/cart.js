@@ -5,7 +5,7 @@ import listItems from '@/assets/sneakers.json'
 
 export const useCartStore = defineStore('cart', ()=> {
 
-    const list = ref(listItems)
+       const list = ref(listItems)
        const cart = ref(JSON.parse(localStorage.getItem('productsInCart')) || [])
        const isAdded = (productId) => cart.value.includes(productId)
 
@@ -26,16 +26,13 @@ export const useCartStore = defineStore('cart', ()=> {
             addToCart(productId)
           }
         }
-        const productsInCart = ref(list.value.filter(item => isAdded(item.id)))
-        const totalPrice = ()=> productsInCart.value.reduce((acc, item) => acc + item.price, 0)
-        
 
-          const createOrder = (productId) => {
-            // alert('Заказ успешно отправлен ...')
-            // if (isAdded(productId)) {
-            //     removeFromCart(productId)
-            //   }
-            // cart.value = []
+        const productsInCart = computed(()=>list.value.filter(item => isAdded(item.id)))       
+        const totalPrice = computed(()=>productsInCart.value.reduce((acc, item) => acc + item.price, 0))
+          
+        const createOrder = (productId) => {
+            alert('Заказ успешно отправлен ...')
+            cart.value = []
           }
       
         watch(cart, (newProduct) => {

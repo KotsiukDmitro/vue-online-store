@@ -1,11 +1,8 @@
 <script setup>
+import { computed } from 'vue';
 import { useDrawer } from '@/stores/drawer'
 import { useCartStore } from '@/stores/cart';
-import { computed } from 'vue';
 
-// defineProps({
-//   totalPrice: Number,
-// })
 
 const store = useDrawer()
 const openDrawer = () => {
@@ -13,7 +10,7 @@ const openDrawer = () => {
 }
 
 const cartStore = useCartStore()
-const totalPrice = computed(() => cartStore.totalPrice())
+const totalPrice = computed(() => cartStore.totalPrice)
 
 </script>
 

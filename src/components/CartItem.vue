@@ -1,19 +1,17 @@
 <script setup>
 import { useCartStore } from '@/stores/cart';
 
-
-const cartStore = useCartStore()
-const removeFromCart = ()=> cartStore.removeFromCart()
-
-// const emit = defineEmits(['removeFromCart'])
-
-defineProps({
+const props = defineProps({
   id: Number,
   imageUrl: String,
   title: String,
   price: Number,
-
 })
+
+const cartStore = useCartStore()
+const removeFromCart = ()=> {
+  cartStore.removeFromCart(props.id)}
+
 </script>
 
 <template>

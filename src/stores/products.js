@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
-import listItems from '@/assets/sneakers.json'
 import { ref, watch } from "vue";
-
+import listItems from '@/assets/sneakers.json'
 
 export const useProducts = defineStore('products', ()=> {
 

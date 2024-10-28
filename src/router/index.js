@@ -4,7 +4,6 @@ import Favorites from '@/views/Favorites.vue'
 import Profile from '@/views/Profile.vue'
 
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,19 +11,16 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home,
-
     },
     {
         path: '/favorites',
         name: 'favorites',
-        component: Favorites,
-  
+        component: Favorites,  
       },
       {
         path: '/profile',
         name: 'profile',
-        component: Profile,
-  
+        component: Profile, 
       },
   ],
   linkActiveClass: 'nav-link--active',
